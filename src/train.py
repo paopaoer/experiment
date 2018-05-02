@@ -83,6 +83,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
                 torch.save(best_model_wts, path + '.pkl')
+        print()
 
     # draw acc
     plt.figure(1)
@@ -106,7 +107,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
     plt.savefig(path + '_loss')
     plt.show()
 
-    print()
+    
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
