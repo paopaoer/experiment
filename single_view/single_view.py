@@ -82,29 +82,29 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=30):
                 best_model_wts = copy.deepcopy(model.state_dict())
                 torch.save(best_model_wts, path + model_name + '.pkl')
 
-            # draw acc
-        plt.figure(1)
-        plt.xlabel('epoch')
-        plt.ylabel('acc')
-        plt.title(model_name + '_acc')
-        train_acc_line, = plt.plot(x, acc_list['train'], color='red', linewidth=1.0, linestyle='--')
-        val_acc_line, = plt.plot(x, acc_list['val'], color='blue', linewidth=1.0, linestyle='-')
-        plt.legend(handles=[train_acc_line, val_acc_line], labels=['train_acc_line', 'val_acc_line'], loc='best')
-        plt.savefig(path + model_name + '_acc')
-        plt.show()
+            print()
 
-        # draw loss
-        plt.figure(2)
-        plt.xlabel('epoch')
-        plt.ylabel('loss')
-        plt.title(model_name + '_loss')
-        train_loss_line, = plt.plot(x, loss_list['train'], color='red', linewidth=1.0, linestyle='--')
-        val_loss_line, = plt.plot(x, loss_list['val'], color='blue', linewidth=1.0, linestyle='-')
-        plt.legend(handles=[train_loss_line, val_loss_line], labels=['train_loss_line', 'val_loss_line'], loc='best')
-        plt.savefig(path + model_name + '_loss')
-        plt.show()
+    # draw acc
+    plt.figure(1)
+    plt.xlabel('epoch')
+    plt.ylabel('acc')
+    plt.title(model_name + '_acc')
+    train_acc_line, = plt.plot(x, acc_list['train'], color='red', linewidth=1.0, linestyle='--')
+    val_acc_line, = plt.plot(x, acc_list['val'], color='blue', linewidth=1.0, linestyle='-')
+    plt.legend(handles=[train_acc_line, val_acc_line], labels=['train_acc_line', 'val_acc_line'], loc='best')
+    plt.savefig(path + model_name + '_acc')
+    plt.show()
 
-        print()
+    # draw loss
+    plt.figure(2)
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.title(model_name + '_loss')
+    train_loss_line, = plt.plot(x, loss_list['train'], color='red', linewidth=1.0, linestyle='--')
+    val_loss_line, = plt.plot(x, loss_list['val'], color='blue', linewidth=1.0, linestyle='-')
+    plt.legend(handles=[train_loss_line, val_loss_line], labels=['train_loss_line', 'val_loss_line'], loc='best')
+    plt.savefig(path + model_name + '_loss')
+    plt.show()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
