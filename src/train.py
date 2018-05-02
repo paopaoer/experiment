@@ -56,8 +56,6 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
                     outputs = model(inputs)
                     _, prediction = torch.max(outputs, 1)
 
-
-
                     criterion = nn.CrossEntropyLoss()
 
                     loss = criterion(outputs, label)
@@ -67,9 +65,10 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
                         loss.backward()
                         optimizer.step()
 
+                print('{} Loss: {:.4f} '.format(phase, loss.item()))
+
                 # statistics
                 running_loss += loss.item()
-                print("loss: ",loss.item())
                 running_corrects += torch.sum(prediction == label.data)
 
             epoch_loss = running_loss / data_size

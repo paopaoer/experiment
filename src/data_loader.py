@@ -4,8 +4,6 @@ import random
 from skimage import io, transform
 import torch
 
-import numpy as  np
-
 
 class DataLoader:
     dataset_sizes = {'train': 800, 'val': 200}
@@ -18,7 +16,7 @@ class DataLoader:
         self.class_names.sort()
         self.class_to_idx = {self.class_names[i]: i for i in range(len(self.class_names))}
         self.iters_list = []
-        self.index=0
+        self.index = 0
         self.number_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         random.shuffle(self.number_list)
         print(self.number_list)
@@ -31,10 +29,10 @@ class DataLoader:
 
     def load_data(self):
 
-        number=self.number_list[self.index]
-        self.index+=1
-        if self.index==10:
-            self.index=0
+        number = self.number_list[self.index]
+        self.index += 1
+        if self.index == 10:
+            self.index = 0
             random.shuffle(self.number_list)
             print(self.number_list)
         class_name = self.class_names[number]
@@ -53,5 +51,3 @@ class DataLoader:
             if (i == 12):
                 break
         return images_list, torch.tensor([label]), flag
-
-

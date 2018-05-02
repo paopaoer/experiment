@@ -10,7 +10,7 @@ import train
 if __name__ == '__main__':
     model_name = 'all_view'
     if not os.path.exists('result/' + model_name):
-        os.mkdirs('result/' + model_name)
+        os.makedirs('result/' + model_name)
 
     log = logging.basicConfig(level=logging.INFO,
                               format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
