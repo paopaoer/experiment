@@ -71,7 +71,6 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 running_loss += loss.item()
                 running_corrects += torch.sum(prediction == label.data)
 
-
             epoch_loss = running_loss / data_size
             epoch_acc = running_corrects.double() / data_size
             loss_list[phase].append(epoch_loss)
@@ -83,7 +82,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-                torch.save(best_model_wts, path + '.pkl')
+                torch.save(best_model_wts, path + model_name + '.pkl')
         print()
 
     # draw acc
@@ -94,7 +93,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     train_acc_line, = plt.plot(x, acc_list['train'], color='red', linewidth=1.0, linestyle='--')
     val_acc_line, = plt.plot(x, acc_list['val'], color='blue', linewidth=1.0, linestyle='-')
     plt.legend(handles=[train_acc_line, val_acc_line], labels=['train_acc_line', 'val_acc_line'], loc='best')
-    plt.savefig(path + '_acc')
+    plt.savefig(path + model_name + '_acc')
     plt.show()
 
     # draw loss
@@ -105,10 +104,8 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     train_loss_line, = plt.plot(x, loss_list['train'], color='red', linewidth=1.0, linestyle='--')
     val_loss_line, = plt.plot(x, loss_list['val'], color='blue', linewidth=1.0, linestyle='-')
     plt.legend(handles=[train_loss_line, val_loss_line], labels=['train_loss_line', 'val_loss_line'], loc='best')
-    plt.savefig(path + '_loss')
+    plt.savefig(path + model_name + '_loss')
     plt.show()
-
-    
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
@@ -117,6 +114,6 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     logging.info('Best {} Acc: {:4f}'.format(phase, best_acc))
 
     model.load_state_dict(best_model_wts)
-    torch.save(model, path + '.pkl')
+    torch.save(model, path + model_name + '.pkl')
 
     return model
