@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ebd01924-e660-431d-93a0-4a848eeca23c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/result/single_view_adam/single_view_adam.log" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/single_view.py" beforeDir="false" afterPath="$PROJECT_DIR$/single_view.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../src/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/../src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/result/all_view/all_view.log" beforeDir="false" afterPath="$PROJECT_DIR$/../src/result/all_view/all_view.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/train.py" beforeDir="false" afterPath="$PROJECT_DIR$/../src/train.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,7 +23,7 @@
       <file leaf-file-name="single_view.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/single_view.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
+            <state relative-caret-position="-677">
               <caret line="107" lean-forward="true" selection-start-line="107" selection-end-line="107" />
             </state>
           </provider>
@@ -70,10 +70,10 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="223" />
-    <option name="y" value="78" />
-    <option name="width" value="1457" />
-    <option name="height" value="876" />
+    <option name="x" value="-12" />
+    <option name="y" value="-12" />
+    <option name="width" value="1944" />
+    <option name="height" value="1044" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="1" id="Add" />
@@ -205,7 +205,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/single_view.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
+        <state relative-caret-position="-677">
           <caret line="107" lean-forward="true" selection-start-line="107" selection-end-line="107" />
         </state>
       </provider>

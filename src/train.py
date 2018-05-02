@@ -9,13 +9,12 @@ import matplotlib.pyplot as plt
 import data_loader as dl
 
 
-def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
+def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
 
-    count = {'train': 0, 'val': 0}
     loss_list = {'train': [], 'val': []}
     acc_list = {'train': [], 'val': []}
 
@@ -40,6 +39,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
             running_corrects = 0
             data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase)
             data_size = data_loader.dataset_sizes[phase]
+            count = {'train': 0, 'val': 0}
 
             while count[phase] < data_size:
 
@@ -70,6 +70,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
                 # statistics
                 running_loss += loss.item()
                 running_corrects += torch.sum(prediction == label.data)
+
 
             epoch_loss = running_loss / data_size
             epoch_acc = running_corrects.double() / data_size
