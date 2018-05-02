@@ -8,7 +8,7 @@ import numpy as  np
 
 
 class DataLoader:
-    data_sizes = {'train': 800, 'val': 200}
+    dataset_sizes = {'train': 800, 'val': 200}
 
     def __init__(self, root, dir):
 
@@ -18,6 +18,10 @@ class DataLoader:
         self.class_names.sort()
         self.class_to_idx = {self.class_names[i]: i for i in range(len(self.class_names))}
         self.iters_list = []
+        self.index=0
+        self.number_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        random.shuffle(self.number_list)
+        print(self.number_list)
 
         for cn in self.class_names:
             files_list = os.listdir(os.path.join(self.path, cn))
@@ -26,12 +30,16 @@ class DataLoader:
             self.iters_list.append(tmp_iter)
 
     def load_data(self):
-        number = random.randint(0, 9)
+
+        number=self.number_list[self.index]
+        self.index+=1
+        if self.index==10:
+            self.index=0
+            random.shuffle(self.number_list)
+            print(self.number_list)
         class_name = self.class_names[number]
         label = self.class_to_idx[class_name]
         tmp_path = os.path.join(self.path, class_name)
-        print(class_name)
-        print('label: ', label)
         i = 0
         flag = 0
         images_list = torch.empty((12, 3, 224, 224))
@@ -44,4 +52,6 @@ class DataLoader:
             flag = 1
             if (i == 12):
                 break
-        return images_list, torch.LongTensor(label), flag
+        return images_list, torch.tensor([label]), flag
+
+

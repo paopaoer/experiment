@@ -1,6 +1,9 @@
+import os
 import logging
 import time
+import copy
 import torch
+
 import torch.nn as nn
 import matplotlib.pyplot as plt
 import data_loader as dl
@@ -9,75 +12,110 @@ import data_loader as dl
 def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
     since = time.time()
 
-    data_loader = dl.DataLoader('d:/mydatas/modelnet10', 'train')
-    data_size = data_loader.dataset_sizes['train']
+    best_model_wts = copy.deepcopy(model.state_dict())
+    best_acc = 0.0
 
-    count = 0
+    count = {'train': 0, 'val': 0}
+    loss_list = {'train': [], 'val': []}
+    acc_list = {'train': [], 'val': []}
 
-    loss_list = []
-    acc_list = []
+    path = 'result/' + model_name
+
     x = range(num_epochs)
 
     for epoch in range(num_epochs):
-
         print('Epoch {}/{}'.format(epoch, num_epochs - 1))
         print('-' * 10)
         logging.info('Epoch {}/{}'.format(epoch, num_epochs - 1))
         logging.info('-' * 10)
 
-        model.train()
-        scheduler.step()
+        for phase in ['train', 'val']:
+            if phase == 'train':
+                scheduler.step()
+                model.train()  # Set model to training mode
+            else:
+                model.eval()  # Set model to evaluate mode
 
-        running_loss = 0.0
-        running_corrects = 0
+            running_loss = 0.0
+            running_corrects = 0
+            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase)
+            data_size = data_loader.dataset_sizes[phase]
 
-        while count >= data_size:
+            while count[phase] < data_size:
 
-            inputs, label, flag = data_loader.load_data()
-            if flag == 0:
-                continue
-            count += 1
-            inputs = inputs.to(device)
-            label = label.to(device)
+                inputs, label, flag = data_loader.load_data()
+                if flag == 0:
+                    continue
+                count[phase] += 1
+                inputs = inputs.to(device)
+                label = label.to(device)
 
-            optimizer.zero_grad()
+                optimizer.zero_grad()
 
-            with torch.set_grad_enabled(True):
-                outputs = model(inputs)
-                _, prediction = torch.max(outputs, 1)
-                loss = nn.CrossEntropyLoss(outputs, label)
+                with torch.set_grad_enabled(phase == 'train'):
+                    outputs = model(inputs)
+                    _, prediction = torch.max(outputs, 1)
 
-                # backward + optimize only if in training phase
 
-                loss.backward()
-                optimizer.step()
 
-            # statistics
-            running_loss += loss.item()
-            running_corrects += torch.sum(prediction == label.data)
+                    criterion = nn.CrossEntropyLoss()
 
-        epoch_loss = running_loss / data_size
-        epoch_acc = running_corrects.double() / data_size
-        loss_list.append(epoch_loss)
-        acc_list.append(epoch_loss)
+                    loss = criterion(outputs, label)
 
-        plt.figure()
+                    # backward + optimize only if in training phase
+                    if phase == 'train':
+                        loss.backward()
+                        optimizer.step()
+
+                # statistics
+                running_loss += loss.item()
+                print("loss: ",loss.item())
+                running_corrects += torch.sum(prediction == label.data)
+
+            epoch_loss = running_loss / data_size
+            epoch_acc = running_corrects.double() / data_size
+            loss_list[phase].append(epoch_loss)
+            acc_list[phase].append(epoch_acc)
+
+            print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+            logging.info('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+
+            if phase == 'val' and epoch_acc > best_acc:
+                best_acc = epoch_acc
+                best_model_wts = copy.deepcopy(model.state_dict())
+                torch.save(best_model_wts, path + '.pkl')
+
+        # draw acc
+        plt.figure(1)
         plt.xlabel('epoch')
-        plt.ylabel('loss/acc')
-        plt.title(model_name, fontsize=20)
-        loss_line = plt.plot(x, loss_list, color='red', linewidth=1.0, linestyle='--')
-        acc_line = plt.plot(x, acc_list, color='blue', linewidth=1.0, linestyle='-')
-        plt.legend(handles=[loss_line, acc_line], labels=['loss_line', 'acc_line'], loc='best')
+        plt.ylabel('acc')
+        plt.title(model_name + '_acc')
+        train_acc_line, = plt.plot(x, acc_list['train'], color='red', linewidth=1.0, linestyle='--')
+        val_acc_line, = plt.plot(x, acc_list['val'], color='blue', linewidth=1.0, linestyle='-')
+        plt.legend(handles=[train_acc_line, val_acc_line], labels=['train_acc_line', 'val_acc_line'], loc='best')
+        plt.savefig(path + '_acc')
         plt.show()
-        plt.savefig(model_name, format('svg'))
 
-        print('Train Loss: {:.4f} Acc: {:.4f}'.format(epoch_loss, epoch_acc))
-        logging.info('Train Loss: {:.4f} Acc: {:.4f}'.format(epoch_loss, epoch_acc))
+        # draw loss
+        plt.figure(2)
+        plt.xlabel('epoch')
+        plt.ylabel('loss')
+        plt.title(model_name + '_loss')
+        train_loss_line, = plt.plot(x, loss_list['train'], color='red', linewidth=1.0, linestyle='--')
+        val_loss_line, = plt.plot(x, loss_list['val'], color='blue', linewidth=1.0, linestyle='-')
+        plt.legend(handles=[train_loss_line, val_loss_line], labels=['train_loss_line', 'val_loss_line'], loc='best')
+        plt.savefig(path + '_loss')
+        plt.show()
 
-    print()
+        print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     logging.info('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
+    print('Best {} Acc: {:4f}'.format(phase, best_acc))
+    logging.info('Best {} Acc: {:4f}'.format(phase, best_acc))
+
+    model.load_state_dict(best_model_wts)
+    torch.save(model, path + '.pkl')
 
     return model

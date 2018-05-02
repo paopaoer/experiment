@@ -10,8 +10,11 @@ import data_loader as dl
 def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
     since = time.time()
 
-    data_loader = dl.DataLoader('d:/mydatas/modelnet10', 'val')
-    data_size = data_loader.dataset_sizes['val']
+    phase = 'val'
+    path = 'result/val/'
+
+    data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase)
+    data_size = data_loader.dataset_sizes[phase]
     best_model_wts = copy.deepcopy(model.state_dict())
 
     count = 0
@@ -70,19 +73,19 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=25):
         acc_line = plt.plot(x, acc_list, color='blue', linewidth=1.0, linestyle='-')
         plt.legend(handles=[loss_line, acc_line], labels=['loss_line', 'acc_line'], loc='best')
         plt.show()
-        plt.savefig(model_name, format('svg'))
+        plt.savefig(path + model_name, format('svg'))
 
-        print('Val Loss: {:.4f} Acc: {:.4f}'.format(epoch_loss, epoch_acc))
-        logging.info('Val Loss: {:.4f} Acc: {:.4f}'.format(epoch_loss, epoch_acc))
+        print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
+        logging.info('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
     print()
 
     time_elapsed = time.time() - since
     print('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
     logging.info('Training complete in {:.0f}m {:.0f}s'.format(time_elapsed // 60, time_elapsed % 60))
-    print('Best val Acc: {:4f}'.format(best_acc))
-    logging.info('Best val Acc: {:4f}'.format(best_acc))
+    print('Best {} Acc: {:4f}'.format(phase, best_acc))
+    logging.info('Best {} Acc: {:4f}'.format(phase, best_acc))
 
     model.load_state_dict(best_model_wts)
-    torch.save(model, model_name + '.pkl')
+    torch.save(model, path + model_name + '.pkl')
     return model
