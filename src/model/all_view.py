@@ -105,6 +105,7 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
         self.fc = nn.Linear(512 * block.expansion * 12, num_classes)
+        self.fc
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -142,12 +143,18 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
+        '''
+        
+        x=x.view(x.size(0),-1)
 
         x = x.transpose(0, 1).contiguous()
 
         m = nn.BatchNorm2d(12)
         x = m(x)
         x = x.transpose(1, 0).contiguous()
+
+        x = x.view(1, -1)
+        '''
 
         x = x.view(1, -1)
 

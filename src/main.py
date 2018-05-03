@@ -5,6 +5,8 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 
 import model.all_view as ma
+import model.mvcnn  as mvcnn
+import model.multi_channel as mc
 import train
 
 if __name__ == '__main__':
@@ -14,10 +16,13 @@ if __name__ == '__main__':
 
     log = logging.basicConfig(level=logging.INFO,
                               format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-                              datefmt='%a, %d %b %Y %H:%M:%S', filename='result/'+model_name+'/'+model_name+'.log', filemode='a')
+                              datefmt='%a, %d %b %Y %H:%M:%S',
+                              filename='result/' + model_name + '/' + model_name + '.log', filemode='a')
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model = ma.resnet18(pretrained=False)
+    # model = ma.resnet18(pretrained=False)
+    #model = mvcnn.resnet18(pretrained=False)
+    model = mc.resnet18(pretrained=False)
 
     model = model.to(device)
 
