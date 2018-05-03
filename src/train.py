@@ -18,7 +18,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     loss_list = {'train': [], 'val': []}
     acc_list = {'train': [], 'val': []}
 
-    path = 'result/' + model_name
+    path = 'result/' + model_name+'/'
 
     x = range(num_epochs)
 
@@ -47,6 +47,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 if flag == 0:
                     continue
                 count[phase] += 1
+                print(count[phase],end=' ',)
                 inputs = inputs.to(device)
                 label = label.to(device)
 

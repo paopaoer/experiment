@@ -22,10 +22,10 @@ if __name__ == '__main__':
     model = model.to(device)
 
     # Observe that all parameters are being optimized
-    # optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-    optimizer = optim.Adam(model.parameters())
+    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+    # optimizer = optim.Adam(model.parameters())
 
     # Decay LR by a factor of 0.1 every 5 epochs
-    exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=5, gamma=0.1)
+    exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=4, gamma=0.1)
 
     model_ft = train.train_model(model, model_name, optimizer, exp_lr_scheduler, device, num_epochs=10)

@@ -2,9 +2,7 @@ import torch.nn as nn
 import math
 import torch.utils.model_zoo as model_zoo
 
-
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50']
-
 
 model_urls = {
     'resnet18': 'https://download.pytorch.org/models/resnet18-5c106cde.pth',
@@ -98,6 +96,7 @@ class ResNet(nn.Module):
         self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
                                bias=False)
         self.bn1 = nn.BatchNorm2d(64)
+
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
@@ -105,7 +104,7 @@ class ResNet(nn.Module):
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
-        self.fc = nn.Linear(512 * block.expansion*12, num_classes)
+        self.fc = nn.Linear(512 * block.expansion * 12, num_classes)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -143,8 +142,15 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
+
+        x = x.transpose(0, 1).contiguous()
+
+        m = nn.BatchNorm2d(12)
+        x = m(x)
+        x = x.transpose(1, 0).contiguous()
+
         x = x.view(1, -1)
-        #print(x.shape)
+
         x = self.fc(x)
 
         return x
@@ -181,4 +187,3 @@ def resnet50(pretrained=False, **kwargs):
     if pretrained:
         model.load_state_dict(model_zoo.load_url(model_urls['resnet50']))
     return model
-

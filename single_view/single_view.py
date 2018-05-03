@@ -12,7 +12,7 @@ import copy
 import logging
 
 
-def train_model(model, model_name, optimizer, scheduler, device, num_epochs=30):
+def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     since = time.time()
 
     best_model_wts = copy.deepcopy(model.state_dict())
@@ -163,4 +163,4 @@ if __name__ == '__main__':
                               datefmt='%a, %d %b %Y %H:%M:%S',
                               filename='result/' + model_name + '/' + model_name + '.log', filemode='a')
 
-    model_ft = train_model(model_ft, model_name, optimizer_ft, exp_lr_scheduler, device, num_epochs=30)
+    model_ft = train_model(model_ft, model_name, optimizer_ft, exp_lr_scheduler, device, num_epochs=10)
