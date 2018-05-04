@@ -122,11 +122,11 @@ if __name__ == '__main__':
     data_transforms = {
         'train': transforms.Compose([
             transforms.ToTensor(),
-            # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ]),
         'val': transforms.Compose([
             transforms.ToTensor(),
-            # transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ]),
     }
 
@@ -142,7 +142,9 @@ if __name__ == '__main__':
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model_ft = models.resnet18(pretrained=False)
+    model_ft = models.resnet18(pretrained=True)
+    #print(model_ft.layer1)
+
 
     model_ft.fc = nn.Linear(512, 10)
 

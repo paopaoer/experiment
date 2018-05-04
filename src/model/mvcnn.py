@@ -1,6 +1,7 @@
 import torch.nn as nn
 import math
 import torch
+import time
 import torch.utils.model_zoo as model_zoo
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50']
@@ -148,12 +149,10 @@ class ResNet(nn.Module):
         x = x.view(x.size(0), -1)
 
         y = x.t()
-        tmp = torch.zeros((1, 512))
 
-        for i in range(512):
-            tmp[0][i] = max(y[i])
-
-        x = self.fc(tmp)
+        z, _ = torch.max(y, 1)
+        x = z.view(1, -1)
+        x = self.fc(x)
 
         return x
 
