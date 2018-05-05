@@ -1,12 +1,13 @@
 import os
 
 import random
-from skimage import io, transform
+from skimage import io
 import torch
-
+from torchvision import transforms
 
 class DataLoader:
     dataset_sizes = {'train': 800, 'val': 200}
+    dataset_sizes2 = {'train': 80, 'val': 20}
 
     def __init__(self, root, dir):
 
@@ -28,6 +29,7 @@ class DataLoader:
             self.iters_list.append(tmp_iter)
 
     def load_data(self):
+        random.shuffle(self.number_list)
 
         number = self.number_list[self.index]
         self.index += 1
@@ -51,3 +53,25 @@ class DataLoader:
             if (i == 12):
                 break
         return images_list, torch.tensor([label]), flag
+
+    def load_data2(self):
+
+        labels = []
+        images_list = torch.empty((120, 3, 224, 224))
+
+        for number,j in zip(self.number_list,range(10)):
+
+            class_name = self.class_names[number]
+            label = self.class_to_idx[class_name]
+            labels.append(label)
+            tmp_path = os.path.join(self.path, class_name)
+            i = 0
+            for im in self.iters_list[label]:
+                image = io.imread(os.path.join(tmp_path, im))
+                image = image.transpose((2, 0, 1))
+                image = torch.from_numpy(image)
+                images_list[i*j] = image
+                i += 1
+                if (i == 12):
+                    break
+        return images_list, torch.tensor(labels)

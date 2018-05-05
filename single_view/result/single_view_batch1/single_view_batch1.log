@@ -1,0 +1,40 @@
+Sat, 05 May 2018 11:07:47 single_view.py[line:31] INFO Epoch 0/9
+Sat, 05 May 2018 11:07:47 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:09:00 single_view.py[line:31] INFO Epoch 0/9
+Sat, 05 May 2018 11:09:00 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:10:11 single_view.py[line:31] INFO Epoch 0/9
+Sat, 05 May 2018 11:10:11 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:15:48 single_view.py[line:78] INFO train Loss: 2.5892 Acc: 0.1575
+Sat, 05 May 2018 11:16:21 single_view.py[line:78] INFO val Loss: 2.2194 Acc: 0.2150
+Sat, 05 May 2018 11:16:21 single_view.py[line:31] INFO Epoch 1/9
+Sat, 05 May 2018 11:16:21 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:22:01 single_view.py[line:78] INFO train Loss: 1.4470 Acc: 0.5200
+Sat, 05 May 2018 11:22:34 single_view.py[line:78] INFO val Loss: 1.4232 Acc: 0.5200
+Sat, 05 May 2018 11:22:34 single_view.py[line:31] INFO Epoch 2/9
+Sat, 05 May 2018 11:22:34 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:28:07 single_view.py[line:78] INFO train Loss: 0.8966 Acc: 0.7163
+Sat, 05 May 2018 11:28:37 single_view.py[line:78] INFO val Loss: 1.3252 Acc: 0.6200
+Sat, 05 May 2018 11:28:37 single_view.py[line:31] INFO Epoch 3/9
+Sat, 05 May 2018 11:28:37 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 11:34:21 single_view.py[line:78] INFO train Loss: 0.6617 Acc: 0.7788
+Sat, 05 May 2018 11:34:56 single_view.py[line:78] INFO val Loss: 1.4660 Acc: 0.4900
+Sat, 05 May 2018 11:34:56 single_view.py[line:31] INFO Epoch 4/9
+Sat, 05 May 2018 11:34:56 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 16:24:54 single_view.py[line:31] INFO Epoch 0/9
+Sat, 05 May 2018 16:24:54 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 16:30:38 single_view.py[line:78] INFO train Loss: 2.4616 Acc: 0.1900
+Sat, 05 May 2018 16:31:18 single_view.py[line:78] INFO val Loss: 2.0228 Acc: 0.3050
+Sat, 05 May 2018 16:31:18 single_view.py[line:31] INFO Epoch 1/9
+Sat, 05 May 2018 16:31:18 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 16:37:12 single_view.py[line:78] INFO train Loss: 1.3440 Acc: 0.5663
+Sat, 05 May 2018 16:37:45 single_view.py[line:78] INFO val Loss: 1.4534 Acc: 0.5200
+Sat, 05 May 2018 16:37:45 single_view.py[line:31] INFO Epoch 2/9
+Sat, 05 May 2018 16:37:45 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 16:43:15 single_view.py[line:78] INFO train Loss: 0.8602 Acc: 0.7063
+Sat, 05 May 2018 16:43:48 single_view.py[line:78] INFO val Loss: 1.3004 Acc: 0.5500
+Sat, 05 May 2018 16:43:49 single_view.py[line:31] INFO Epoch 3/9
+Sat, 05 May 2018 16:43:49 single_view.py[line:32] INFO ----------
+Sat, 05 May 2018 16:49:17 single_view.py[line:78] INFO train Loss: 0.6452 Acc: 0.7863
+Sat, 05 May 2018 16:49:50 single_view.py[line:78] INFO val Loss: 1.2542 Acc: 0.6100
+Sat, 05 May 2018 16:49:50 single_view.py[line:31] INFO Epoch 4/9
+Sat, 05 May 2018 16:49:50 single_view.py[line:32] INFO ----------

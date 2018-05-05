@@ -122,11 +122,11 @@ if __name__ == '__main__':
     data_transforms = {
         'train': transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ]),
         'val': transforms.Compose([
             transforms.ToTensor(),
-            transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+            #transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ]),
     }
 
@@ -134,7 +134,7 @@ if __name__ == '__main__':
     image_datasets = {x: datasets.ImageFolder(os.path.join(data_dir, x),
                                               data_transforms[x])
                       for x in ['train', 'val']}
-    dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=4,
+    dataloaders = {x: torch.utils.data.DataLoader(image_datasets[x], batch_size=1,
                                                   shuffle=True, num_workers=4)
                    for x in ['train', 'val']}
     dataset_sizes = {x: len(image_datasets[x]) for x in ['train', 'val']}
@@ -142,8 +142,8 @@ if __name__ == '__main__':
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    model_ft = models.resnet18(pretrained=True)
-    #print(model_ft.layer1)
+    model_ft = models.resnet18(pretrained=False)
+
 
 
     model_ft.fc = nn.Linear(512, 10)
@@ -151,12 +151,13 @@ if __name__ == '__main__':
     model_ft = model_ft.to(device)
 
     # Observe that all parameters are being optimized
-    optimizer_ft = optim.Adam(model_ft.parameters())
+    #optimizer_ft = optim.Adam(model_ft.parameters())
+    optimizer_ft = optim.SGD(model_ft.parameters(), lr=0.001, momentum=0.9)
 
     # Decay LR by a factor of 0.1 every 5 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(optimizer_ft, step_size=5, gamma=0.1)
 
-    model_name = 'single_view_adam'
+    model_name = 'single_view_batch1'
     if not os.path.exists('result/' + model_name):
         os.makedirs('result/' + model_name)
 

@@ -10,7 +10,7 @@ import model.multi_channel as mc
 import train
 
 if __name__ == '__main__':
-    model_name = 'all_view'
+    model_name = 'all_view_batch10'
     if not os.path.exists('result/' + model_name):
         os.makedirs('result/' + model_name)
 
@@ -20,9 +20,10 @@ if __name__ == '__main__':
                               filename='result/' + model_name + '/' + model_name + '.log', filemode='a')
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-    # model = ma.resnet18(pretrained=False)
-    model = mvcnn.resnet18(pretrained=False)
-    #model = mc.resnet18(pretrained=False)
+    # model = mvcnn.resnet18(pretrained=True)
+    # model = mc.resnet18(pretrained=False)
+
+    model = ma.resnet18(pretrained=False)
 
     model = model.to(device)
 
