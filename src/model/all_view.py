@@ -157,7 +157,7 @@ class ResNet(nn.Module):
         '''
         #print(x.shape)
 
-        x = x.view(10, -1)
+        x = x.view(4, -1)
         #print(x.shape)
 
         x = self.fc(x)

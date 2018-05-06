@@ -37,14 +37,15 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
 
             running_loss = 0.0
             running_corrects = 0
-            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase)
-            data_size = data_loader.dataset_sizes2[phase]
+            batch_size=4
+            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase,batch_size)
+            data_size = data_loader.dataset_sizes[phase]
             count = {'train': 0, 'val': 0}
 
             while count[phase] < data_size:
 
-                inputs, labels, = data_loader.load_data2()
-                count[phase] += 1
+                inputs, labels, = data_loader.load_data3()
+                count[phase] += batch_size
                 print(count[phase],end=' ',)
                 inputs = inputs.to(device)
                 labels = labels.to(device)
@@ -55,9 +56,11 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                     outputs = model(inputs)
                     _, prediction = torch.max(outputs, 1)
 
+
                     criterion = nn.CrossEntropyLoss()
 
                     loss = criterion(outputs, labels)
+
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -67,7 +70,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 print('{} Loss: {:.4f} '.format(phase, loss.item()))
 
                 # statistics
-                running_loss += loss.item()*inputs.size(0)
+                running_loss += loss.item()*(inputs.size(0)/12)
                 running_corrects += torch.sum(prediction == labels.data)
 
             epoch_loss = running_loss / data_size
@@ -81,7 +84,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
             if phase == 'val' and epoch_acc > best_acc:
                 best_acc = epoch_acc
                 best_model_wts = copy.deepcopy(model.state_dict())
-                #torch.save(best_model_wts, path + model_name + '.pkl')
+                torch.save(best_model_wts, path + model_name + '.pkl')
         print()
 
     # draw acc
@@ -113,6 +116,6 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     logging.info('Best {} Acc: {:4f}'.format(phase, best_acc))
 
     model.load_state_dict(best_model_wts)
-    #torch.save(model, path + model_name + '.pkl')
+    torch.save(model, path + model_name + '.pkl')
 
     return model
