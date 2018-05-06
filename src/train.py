@@ -18,7 +18,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
     loss_list = {'train': [], 'val': []}
     acc_list = {'train': [], 'val': []}
 
-    path = 'result/' + model_name+'/'
+    path = 'result/' + model_name + '/'
 
     x = range(num_epochs)
 
@@ -37,8 +37,8 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
 
             running_loss = 0.0
             running_corrects = 0
-            batch_size=4
-            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase,batch_size)
+            batch_size = 4
+            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase, batch_size)
             data_size = data_loader.dataset_sizes[phase]
             count = {'train': 0, 'val': 0}
 
@@ -46,7 +46,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
 
                 inputs, labels, = data_loader.load_data3()
                 count[phase] += batch_size
-                print(count[phase],end=' ',)
+                print(count[phase], end=' ', )
                 inputs = inputs.to(device)
                 labels = labels.to(device)
 
@@ -56,11 +56,12 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                     outputs = model(inputs)
                     _, prediction = torch.max(outputs, 1)
 
-
                     criterion = nn.CrossEntropyLoss()
+                    #print('labels: ',labels)
+                    #print('prediction: ',prediction)
+
 
                     loss = criterion(outputs, labels)
-
 
                     # backward + optimize only if in training phase
                     if phase == 'train':
@@ -70,7 +71,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 print('{} Loss: {:.4f} '.format(phase, loss.item()))
 
                 # statistics
-                running_loss += loss.item()*(inputs.size(0)/12)
+                running_loss += loss.item() * (inputs.size(0) / 12)
                 running_corrects += torch.sum(prediction == labels.data)
 
             epoch_loss = running_loss / data_size

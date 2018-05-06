@@ -10,7 +10,7 @@ import model.multi_channel as mc
 import train
 
 if __name__ == '__main__':
-    model_name = 'all_view_batch10'
+    model_name = 'all_view_batch4'
     if not os.path.exists('result/' + model_name):
         os.makedirs('result/' + model_name)
 
