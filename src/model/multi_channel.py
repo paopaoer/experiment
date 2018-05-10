@@ -94,7 +94,10 @@ class ResNet(nn.Module):
     def __init__(self, block, layers, num_classes=10):
         self.inplanes = 128
         super(ResNet, self).__init__()
-        self.conv1 = nn.Conv2d(36, 128, kernel_size=7, stride=2, padding=3,
+        self.conv10 = nn.Conv2d(36, 12, kernel_size=1, stride=1, padding=0)
+        self.bn10 = nn.BatchNorm2d(12)
+
+        self.conv1 = nn.Conv2d(12, 128, kernel_size=7, stride=2, padding=3,
                                bias=False)
         self.bn1 = nn.BatchNorm2d(128)
 
@@ -106,7 +109,6 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
         self.fc = nn.Linear(512 * block.expansion, num_classes)
-        self.fc
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -133,7 +135,11 @@ class ResNet(nn.Module):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-        x = x.view(1, -1, 224, 224)
+        # x = x.view(1, -1, 224, 224)
+        print(x.size())
+        x = self.conv10(x)
+        x = self.bn10(x)
+        x = self.relu(x)
 
         x = self.conv1(x)
         x = self.bn1(x)
@@ -145,7 +151,7 @@ class ResNet(nn.Module):
         x = self.layer3(x)
         x = self.layer4(x)
         x = self.avgpool(x)
-        x = x.view(1, -1)
+        x = x.view(x.size(0), -1)
 
         x = self.fc(x)
 

@@ -104,8 +104,11 @@ class ResNet(nn.Module):
         self.layer3 = self._make_layer(block, 256, layers[2], stride=2)
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
-        self.fc = nn.Linear(512 * block.expansion * 12, num_classes)
-        self.fc
+        # self.fc = nn.Linear(512 * block.expansion * 12, num_classes)
+        self.fc1 = nn.Linear(512, 128)
+        self.dropout = nn.Dropout()
+        self.fc2 = nn.Linear(128 * 12, 10)
+        self.bn2 = nn.BatchNorm1d(128)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -155,12 +158,20 @@ class ResNet(nn.Module):
 
         x = x.view(1, -1)
         '''
+        # print(x.shape)
+        x=x.view(x.size(0),-1)
+        #print(x.size())
+        x = self.fc1(x)
+        x=self.bn2(x)
+
+        x = self.relu(x)
+        x = self.dropout(x)
+
+        x = x.view(2, -1)
+
         #print(x.shape)
 
-        x = x.view(4, -1)
-        #print(x.shape)
-
-        x = self.fc(x)
+        x = self.fc2(x)
 
         return x
 

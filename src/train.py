@@ -37,7 +37,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
 
             running_loss = 0.0
             running_corrects = 0
-            batch_size = 4
+            batch_size = 2
             data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase, batch_size)
             data_size = data_loader.dataset_sizes[phase]
             count = {'train': 0, 'val': 0}
@@ -71,7 +71,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 print('{} Loss: {:.4f} '.format(phase, loss.item()))
 
                 # statistics
-                running_loss += loss.item() * (inputs.size(0) / 12)
+                running_loss += loss.item() * (inputs.size(0)/12)
                 running_corrects += torch.sum(prediction == labels.data)
 
             epoch_loss = running_loss / data_size

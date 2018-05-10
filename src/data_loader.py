@@ -33,7 +33,6 @@ class DataLoader:
         self.train_shuffle_iter = iter(train_shuffle_array)
         self.val_shuffle_iter = iter(val_shuffle_array)
 
-
         for cn in self.class_names:
             files_list = os.listdir(os.path.join(self.path, cn))
             files_list.sort()
@@ -87,7 +86,7 @@ class DataLoader:
                 image = io.imread(os.path.join(tmp_path, im))
                 image = image.transpose((2, 0, 1))
                 image = torch.from_numpy(image)
-                images_list[ j* 12+i] = image
+                images_list[j * 12 + i] = image
                 i += 1
                 if (i == 12):
                     break
@@ -102,10 +101,9 @@ class DataLoader:
         else:
             iter_array = self.val_shuffle_iter
 
+        for j in range(self.batch_size):
 
-        for  j in range(self.batch_size):
-
-            number=next(iter_array)
+            number = next(iter_array)
             class_name = self.class_names[number]
             label = self.class_to_idx[class_name]
             labels.append(label)
@@ -118,12 +116,53 @@ class DataLoader:
                 m1, m2, m3 = image[0].mean(), image[1].mean(), image[2].mean()
                 s1, s2, s3 = image[0].std(), image[1].std(), image[2].std()
                 image[0] = (image[0] - m1) / s1
-                image[1] = (image[1] - m2)/ s2
-                image[2] = (image[2] - m3)/ s3
+                image[1] = (image[1] - m2) / s2
+                image[2] = (image[2] - m3) / s3
 
                 image = torch.from_numpy(image)
-                images_list[j * 12+i] = image
+                images_list[j * 12 + i] = image
                 i += 1
                 if (i == 12):
+                    break
+        return images_list, torch.tensor(labels)
+
+    def load_data4(self):
+
+        labels = []
+        images_list = torch.empty((self.batch_size, 3 * 12, 224, 224))
+
+        if self.phase == 'train':
+            iter_array = self.train_shuffle_iter
+        else:
+            iter_array = self.val_shuffle_iter
+
+
+
+        for j in range(self.batch_size):
+
+            images_list2 = torch.empty((12, 3, 224, 224))
+
+            number = next(iter_array)
+            class_name = self.class_names[number]
+            label = self.class_to_idx[class_name]
+            labels.append(label)
+            tmp_path = os.path.join(self.path, class_name)
+            i = 0
+            for im in self.iters_list[label]:
+                image = io.imread(os.path.join(tmp_path, im))
+                image = image.transpose((2, 0, 1))
+                # normalize
+                m1, m2, m3 = image[0].mean(), image[1].mean(), image[2].mean()
+                s1, s2, s3 = image[0].std(), image[1].std(), image[2].std()
+                image[0] = (image[0] - m1) / s1
+                image[1] = (image[1] - m2) / s2
+                image[2] = (image[2] - m3) / s3
+
+                image = torch.from_numpy(image)
+                images_list2[i] = image
+                i += 1
+                if (i == 12):
+                    images_list2=images_list2.view(1,36,224,224)
+                    images_list[j]=images_list2
                     break
         return images_list, torch.tensor(labels)

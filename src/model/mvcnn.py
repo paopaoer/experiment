@@ -92,7 +92,7 @@ class Bottleneck(nn.Module):
 
 class ResNet(nn.Module):
 
-    def __init__(self, block, layers, num_classes=1000):
+    def __init__(self, block, layers, num_classes=10):
         self.inplanes = 64
         super(ResNet, self).__init__()
         self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
@@ -107,7 +107,6 @@ class ResNet(nn.Module):
         self.layer4 = self._make_layer(block, 512, layers[3], stride=2)
         self.avgpool = nn.AvgPool2d(7, stride=1)
         self.fc = nn.Linear(512 * block.expansion, num_classes)
-
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -146,13 +145,34 @@ class ResNet(nn.Module):
 
         x = self.avgpool(x)
 
-        x = x.view(x.size(0), -1)
+        batch_size = 4
+
+        x = x.view(batch_size, 12, -1)
+        print(x.size())
+
+        tmp = torch.empty((batch_size, 512))
+        tmp=tmp.to('cuda:0')
+
+        for i in range(batch_size):
+            y = x[i].t()
+            z, _ = torch.max(y, 1)
+            print(z.size())
+            tmp[i] = z
+        x = tmp.view(batch_size, -1)
+
+        print(x.size())
+        x = self.fc(x)
+
+        '''
+        x = x.view(x.size(0), -1)  #(12,512)
+
 
         y = x.t()
 
         z, _ = torch.max(y, 1)
-        x = z.view(1, -1)
+        x = z.view(1, -1) #(1,512)
         x = self.fc(x)
+        '''
 
         return x
 
