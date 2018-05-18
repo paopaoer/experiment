@@ -9,11 +9,10 @@ import matplotlib.pyplot as plt
 import data_loader as dl
 
 
-def train_model(model, resnet, exe_name, optimizer, scheduler, num_epochs, batch_size):
+def train_model(model, exe_name, optimizer, scheduler, num_epochs, batch_size):
     since = time.time()
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = model.to(device)
-    resnet.eval()
 
     best_model_wts = copy.deepcopy(model.state_dict())
     best_acc = 0.0
@@ -40,18 +39,17 @@ def train_model(model, resnet, exe_name, optimizer, scheduler, num_epochs, batch
 
             running_loss = 0.0
             running_corrects = 0
-            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase, batch_size)
+            data_loader = dl.DataLoader('f:/json/alexnet2', phase, batch_size)
             data_size = data_loader.dataset_sizes[phase]
             count = {'train': 0, 'val': 0}
 
             while count[phase] < data_size:
 
-                inputs, labels, = data_loader.load_data()
+                inputs, labels = data_loader.load_data2()
                 count[phase] += batch_size
                 print(count[phase], end=' ', )
-                inputs = resnet(inputs)
 
-                inputs = inputs.view(batch_size, 12, 512)
+                inputs = inputs.view(batch_size, 12,-1)
 
                 inputs = inputs.to(device)
                 labels = labels.to(device)
@@ -79,11 +77,6 @@ def train_model(model, resnet, exe_name, optimizer, scheduler, num_epochs, batch
                 running_corrects += torch.sum(prediction == labels.data)
 
                 print('{} Loss: {:.4f} '.format(phase, loss.item()))
-
-                if (count[phase] % 100 == 0):
-                    print('{}  {}% running_corrects: {:.6f} '.format(phase, count[phase] / data_size, running_corrects))
-                    logging.info('{}  {:.6f}% running_corrects: {:.6f} '.format(phase, count[phase] / data_size,
-                                                                                running_corrects))
 
             epoch_loss = running_loss / data_size
             epoch_acc = running_corrects.double() / data_size

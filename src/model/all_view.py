@@ -109,11 +109,15 @@ class ResNet(nn.Module):
         self.dropout = nn.Dropout()
         self.fc2 = nn.Linear(128 * 12, 10)
         self.bn2 = nn.BatchNorm1d(128)
+        self.bn3 = nn.BatchNorm2d(512)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
                 nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
             elif isinstance(m, nn.BatchNorm2d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.BatchNorm1d):
                 nn.init.constant_(m.weight, 1)
                 nn.init.constant_(m.bias, 0)
 
@@ -146,34 +150,33 @@ class ResNet(nn.Module):
         x = self.layer4(x)
 
         x = self.avgpool(x)
-        '''
-        
-        x=x.view(x.size(0),-1)
 
-        x = x.transpose(0, 1).contiguous()
+        features1 = self.bn3(x)
 
-        m = nn.BatchNorm2d(12)
-        x = m(x)
-        x = x.transpose(1, 0).contiguous()
-
-        x = x.view(1, -1)
-        '''
         # print(x.shape)
-        x=x.view(x.size(0),-1)
-        #print(x.size())
+        x = x.view(x.size(0), -1)
+
+        f3 = x.clone()
+        for i in range(f3.size(0)):
+            m = f3[i].mean()
+            s = f3[i].std()
+            f3[i].sub_(m).div_(s)
+
+        # print(x.size())
         x = self.fc1(x)
-        x=self.bn2(x)
+        x = self.bn2(x)
 
         x = self.relu(x)
         x = self.dropout(x)
+        features2 = x
 
-        x = x.view(2, -1)
+        x = x.view(10, -1)
 
-        #print(x.shape)
+        # print(x.shape)
 
         x = self.fc2(x)
 
-        return x
+        return x, features1, features2, f3
 
 
 def resnet18(pretrained=False, **kwargs):

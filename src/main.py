@@ -4,8 +4,9 @@ import torch
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import models
+import torch.nn.init as init
 
-import  torch.nn as nn
+import torch.nn as nn
 
 import model.all_view as av
 import model.mvcnn  as mvcnn
@@ -13,7 +14,7 @@ import model.multi_channel as mc
 import train
 
 if __name__ == '__main__':
-    model_name = 'all_view_batch4_pre_weight'
+    model_name = 'all_view_batch10_pre_weight_sgd'
     if not os.path.exists('result/' + model_name):
         os.makedirs('result/' + model_name)
 
@@ -30,7 +31,7 @@ if __name__ == '__main__':
     my_model = av.resnet18()
 
     pretrained_dict = m.state_dict()
-    model_dict =my_model.state_dict()
+    model_dict = my_model.state_dict()
 
     # 1. filter out unnecessary keys
     pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in model_dict}
@@ -39,9 +40,8 @@ if __name__ == '__main__':
     # 3. load the new state dict
     my_model.load_state_dict(model_dict)
 
-
     for name, module in my_model.named_children():
-        if name in ['conv1', 'bn1', 'layer1', 'layer2', 'layer3']:
+        if name in ['conv1', 'bn1', 'layer1', 'layer2']:
             print(name, module)
             for param in module.parameters():
                 param.requires_grad = False
@@ -49,10 +49,12 @@ if __name__ == '__main__':
     train_params = []
 
     for name, module in my_model.named_children():
-        if name in ['layer4', 'bn2', 'fc1', 'fc2']:
+        if name in ['layer3', 'layer4', 'bn2', 'fc1', 'fc2']:
             print(name, module)
+            # init.xavier_normal_(module.weight.data)
             for param in module.parameters():
                 param.requires_grad = True
+
                 train_params.append(param)
 
     # Parameters of newly constructed modules have requires_grad=True by default
@@ -66,10 +68,7 @@ if __name__ == '__main__':
     my_optimizer = optim.SGD(train_params, lr=0.001, momentum=0.9)
 
     # Decay LR by a factor of 0.1 every 7 epochs
-    exp_lr_scheduler = lr_scheduler.StepLR(my_optimizer, step_size=4, gamma=0.1)
-
-
-
+    exp_lr_scheduler = lr_scheduler.StepLR(my_optimizer, step_size=7, gamma=0.1)
 
     train.train_model(my_model, model_name, my_optimizer, exp_lr_scheduler, device, num_epochs=30)
 

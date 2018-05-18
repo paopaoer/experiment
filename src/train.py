@@ -37,14 +37,14 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
 
             running_loss = 0.0
             running_corrects = 0
-            batch_size = 2
-            data_loader = dl.DataLoader('d:/mydatas/modelnet10', phase, batch_size)
+            batch_size = 10
+            data_loader = dl.DataLoader('/home/lda/lss/modelnet10_2', phase, batch_size)
             data_size = data_loader.dataset_sizes[phase]
             count = {'train': 0, 'val': 0}
 
             while count[phase] < data_size:
 
-                inputs, labels, = data_loader.load_data3()
+                inputs, labels = data_loader.load_data3()
                 count[phase] += batch_size
                 print(count[phase], end=' ', )
                 inputs = inputs.to(device)
@@ -53,7 +53,7 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                 optimizer.zero_grad()
 
                 with torch.set_grad_enabled(phase == 'train'):
-                    outputs = model(inputs)
+                    outputs,f1,f2,f3 = model(inputs)
                     _, prediction = torch.max(outputs, 1)
 
                     criterion = nn.CrossEntropyLoss()
