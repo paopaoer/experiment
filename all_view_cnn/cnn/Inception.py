@@ -3,9 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torch.utils.model_zoo as model_zoo
 
-
 __all__ = ['Inception3', 'inception_v3']
-
 
 model_urls = {
     # Inception v3 ported from TensorFlow
@@ -31,7 +29,7 @@ def inception_v3(pretrained=False, **kwargs):
 
 class Inception3(nn.Module):
 
-    def __init__(self, num_classes=10, aux_logits=True, transform_input=False):
+    def __init__(self, num_classes=10, aux_logits=False, transform_input=False):
         super(Inception3, self).__init__()
         self.aux_logits = aux_logits
         self.transform_input = transform_input
@@ -49,11 +47,11 @@ class Inception3(nn.Module):
         self.Mixed_6d = InceptionC(768, channels_7x7=160)
         self.Mixed_6e = InceptionC(768, channels_7x7=192)
         if aux_logits:
-            self.AuxLogits = InceptionAux(768, num_classes)
+            self.AuxLogits1 = InceptionAux(768, num_classes)
         self.Mixed_7a = InceptionD(768)
         self.Mixed_7b = InceptionE(1280)
         self.Mixed_7c = InceptionE(2048)
-        self.fc = nn.Linear(2048*12, num_classes)
+        self.fc1 = nn.Linear(2048 * 12, num_classes)
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d) or isinstance(m, nn.Linear):
@@ -105,7 +103,7 @@ class Inception3(nn.Module):
         x = self.Mixed_6e(x)
         # 17 x 17 x 768
         if self.training and self.aux_logits:
-            aux = self.AuxLogits(x)
+            aux = self.AuxLogits1(x)
         # 17 x 17 x 768
         x = self.Mixed_7a(x)
         # 8 x 8 x 1280
@@ -117,9 +115,11 @@ class Inception3(nn.Module):
         # 1 x 1 x 2048
         x = F.dropout(x, training=self.training)
         # 1 x 1 x 2048
-        x = x.view(10, -1)
+        x = x.view(x.size(0), -1)
+
+        x = x.view(int(x.size(0) / 12), -1)
         # 2048
-        x = self.fc(x)
+        x = self.fc1(x)
         # 1000 (num_classes)
         if self.training and self.aux_logits:
             return x, aux
@@ -295,7 +295,7 @@ class InceptionAux(nn.Module):
         self.conv0 = BasicConv2d(in_channels, 128, kernel_size=1)
         self.conv1 = BasicConv2d(128, 768, kernel_size=5)
         self.conv1.stddev = 0.01
-        self.fc = nn.Linear(768, num_classes)
+        self.fc = nn.Linear(768 * 12, num_classes)
         self.fc.stddev = 0.001
 
     def forward(self, x):
@@ -307,6 +307,7 @@ class InceptionAux(nn.Module):
         x = self.conv1(x)
         # 1 x 1 x 768
         x = x.view(x.size(0), -1)
+        x = x.view(int(x.size(0) / 12), -1)
         # 768
         x = self.fc(x)
         # 1000

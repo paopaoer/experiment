@@ -1,8 +1,5 @@
-
-
 import random
-from skimage import io
-
+from skimage import io, transform
 
 from main import *
 
@@ -72,6 +69,7 @@ class DataLoader:
         tmp_batch_size = min(left, batch_size)
 
         images_list = torch.empty((num_img * tmp_batch_size, 3, 224, 224))
+        # images_list = torch.empty((num_img * tmp_batch_size, 3, 299, 299))
 
         for j in range(tmp_batch_size):
             self.index += 1
@@ -84,7 +82,9 @@ class DataLoader:
             i = 0
             for im in iters_list[label]:
                 image = io.imread(os.path.join(tmp_path, im))
+                #image = transform.resize(image, (299, 299))
                 image = image.transpose((2, 0, 1))
+
                 # normalize
                 m = [0.485, 0.456, 0.406]
                 s = [0.229, 0.224, 0.225]
@@ -94,6 +94,7 @@ class DataLoader:
                 image[2] = (image[2] - m[2]) / s[2]
 
                 image = torch.from_numpy(image)
+
                 images_list[j * num_img + i] = image
                 i += 1
                 if (i == num_img):

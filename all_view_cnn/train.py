@@ -45,7 +45,7 @@ for epoch in range(num_epochs):
 
         data_size = data_loader.dataset_sizes[phase]
 
-        while count[phase] < 10:
+        while count[phase] < data_size:
 
             inputs, labels = data_loader.load_data(phase)
 
@@ -75,7 +75,6 @@ for epoch in range(num_epochs):
             running_corrects += torch.sum(prediction == labels.data)
 
             for pre, label in zip(prediction, labels):
-
                 classes_total[label] += 1
                 if pre == label.data:
                     classes_acc[label] += 1
