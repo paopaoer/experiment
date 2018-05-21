@@ -57,9 +57,6 @@ def train_model(model, model_name, optimizer, scheduler, device, num_epochs=10):
                     _, prediction = torch.max(outputs, 1)
 
                     criterion = nn.CrossEntropyLoss()
-                    #print('labels: ',labels)
-                    #print('prediction: ',prediction)
-
 
                     loss = criterion(outputs, labels)
 

@@ -3,8 +3,7 @@ import os
 import random
 from skimage import io
 import torch
-import time
-from torchvision import transforms
+
 
 
 class DataLoader:

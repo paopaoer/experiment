@@ -4,13 +4,11 @@ import torch
 import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import models
-import torch.nn.init as init
 
 import torch.nn as nn
 
 import model.all_view as av
-import model.mvcnn  as mvcnn
-import model.multi_channel as mc
+
 import train
 
 if __name__ == '__main__':
@@ -65,7 +63,7 @@ if __name__ == '__main__':
 
     # Observe that only parameters of final layer are being optimized as
     # opoosed to before.
-    my_optimizer = optim.SGD(train_params, lr=0.001, momentum=0.9)
+    my_optimizer = optim.SGD(train_params, lr=0.001, momentum=0.9,weight_decay=0.005)
 
     # Decay LR by a factor of 0.1 every 7 epochs
     exp_lr_scheduler = lr_scheduler.StepLR(my_optimizer, step_size=7, gamma=0.1)
