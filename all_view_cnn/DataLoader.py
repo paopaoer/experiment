@@ -1,5 +1,6 @@
 import random
 from skimage import io, transform
+from skimage.color import rgba2rgb
 
 from main import *
 
@@ -12,8 +13,8 @@ class DataLoader:
         self.class_names.sort()
 
         self.class_to_idx = {self.class_names[i]: i for i in range(len(self.class_names))}
-        self.index = 0
-
+        self.index = {'train':0,'val':0}
+        
         train_count = {}
         val_count = {}
         train_total = 0
@@ -47,7 +48,7 @@ class DataLoader:
             self.val_iters_list.append(tmp_iter)
 
         self.dataset_sizes = {'train': train_total, 'val': val_total}
-
+        
         random.shuffle(train_shuffle_array)
 
         random.shuffle(val_shuffle_array)
@@ -65,14 +66,19 @@ class DataLoader:
             shuffel_iter = self.val_shuffle_iter
             iters_list = self.val_iters_list
 
-        left = self.dataset_sizes[phase] - self.index
-        tmp_batch_size = min(left, batch_size)
+        left = self.dataset_sizes[phase] - self.index[phase]
+        
+        tmp_batch_size = int(min(left, batch_size))
+        #print(tmp_batch_size,num_img)
 
         images_list = torch.empty((num_img * tmp_batch_size, 3, 224, 224))
         # images_list = torch.empty((num_img * tmp_batch_size, 3, 299, 299))
 
+
+
         for j in range(tmp_batch_size):
-            self.index += 1
+
+            self.index[phase] += 1
             number = next(shuffel_iter)
             class_name = self.class_names[number]
             label = self.class_to_idx[class_name]
@@ -81,9 +87,15 @@ class DataLoader:
             tmp_path = os.path.join(path, class_name)
             i = 0
             for im in iters_list[label]:
+
+
                 image = io.imread(os.path.join(tmp_path, im))
+                #image=rgba2rgb(image)
                 #image = transform.resize(image, (299, 299))
+                #image = transform.resize(image, (224, 224))
                 image = image.transpose((2, 0, 1))
+                
+               
 
                 # normalize
                 m = [0.485, 0.456, 0.406]
@@ -94,9 +106,12 @@ class DataLoader:
                 image[2] = (image[2] - m[2]) / s[2]
 
                 image = torch.from_numpy(image)
+                
 
                 images_list[j * num_img + i] = image
                 i += 1
                 if (i == num_img):
+                    index = im.rfind('_')
+                    image_name = im[:index] + '.png'
                     break
-        return images_list, torch.tensor(labels)
+        return images_list, torch.tensor(labels),image_name

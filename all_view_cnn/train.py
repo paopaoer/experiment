@@ -26,7 +26,7 @@ for epoch in range(num_epochs):
     data_loader = DL.DataLoader(data_dir)
     classes_name = data_loader.class_names
 
-    for phase in ['train', 'val']:
+    for phase in ['val']:
         if phase == 'train':
             exp_lr_scheduler.step()
             model.train()  # Set model to training mode
@@ -47,7 +47,7 @@ for epoch in range(num_epochs):
 
         while count[phase] < data_size:
 
-            inputs, labels = data_loader.load_data(phase)
+            inputs, labels ,image_name= data_loader.load_data(phase)
 
             count[phase] += batch_size
             print(count[phase], end=' ')
@@ -58,6 +58,7 @@ for epoch in range(num_epochs):
 
             with torch.set_grad_enabled(phase == 'train'):
                 outputs = model(inputs)
+                print(labels.data)
                 _, prediction = torch.max(outputs, 1)
 
                 criterion = nn.CrossEntropyLoss()
@@ -78,6 +79,8 @@ for epoch in range(num_epochs):
                 classes_total[label] += 1
                 if pre == label.data:
                     classes_acc[label] += 1
+                if pre!=label.data:
+                    print('image_name:',image_name,'label: ',label.data,'pre: ',pre)
         # print(classes_total)
 
         for i in range(num_classes):

@@ -2,3 +2,124 @@ Tue, 22 May 2018 00:52:52 train.py[line:22] INFO Epoch 0/29
 Tue, 22 May 2018 00:52:52 train.py[line:23] INFO ----------
 Tue, 22 May 2018 00:55:26 train.py[line:22] INFO Epoch 0/29
 Tue, 22 May 2018 00:55:26 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:17:28 train.py[line:22] INFO Epoch 0/29
+Wed, 30 May 2018 10:17:28 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:19:44 train.py[line:22] INFO Epoch 0/29
+Wed, 30 May 2018 10:19:44 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:22:08 train.py[line:22] INFO Epoch 0/29
+Wed, 30 May 2018 10:22:08 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO bathtub Acc: 1.0000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO bed Acc: 1.0000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO chair Acc: 1.0000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO desk Acc: 0.9500
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO dresser Acc: 0.9000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO monitor Acc: 1.0000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO night_stand Acc: 0.9000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO sofa Acc: 0.9000
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO table Acc: 0.6500
+Wed, 30 May 2018 10:25:54 train.py[line:88] INFO toilet Acc: 1.0000
+Wed, 30 May 2018 10:25:54 train.py[line:96] INFO val Loss: 0.2753 Acc: 0.9300
+Wed, 30 May 2018 10:25:54 train.py[line:22] INFO Epoch 1/29
+Wed, 30 May 2018 10:25:54 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO bathtub Acc: 1.0000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO bed Acc: 1.0000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO chair Acc: 1.0000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO desk Acc: 0.9500
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO dresser Acc: 0.9000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO monitor Acc: 1.0000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO night_stand Acc: 0.9000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO sofa Acc: 0.9000
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO table Acc: 0.6500
+Wed, 30 May 2018 10:29:38 train.py[line:88] INFO toilet Acc: 1.0000
+Wed, 30 May 2018 10:29:38 train.py[line:96] INFO val Loss: 0.2753 Acc: 0.9300
+Wed, 30 May 2018 10:29:38 train.py[line:22] INFO Epoch 2/29
+Wed, 30 May 2018 10:29:38 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:36:16 train.py[line:22] INFO Epoch 0/29
+Wed, 30 May 2018 10:36:16 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO bathtub Acc: 1.0000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO bed Acc: 1.0000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO chair Acc: 1.0000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO desk Acc: 0.9500
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO dresser Acc: 0.9000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO monitor Acc: 1.0000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO night_stand Acc: 0.9000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO sofa Acc: 0.9000
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO table Acc: 0.6500
+Wed, 30 May 2018 10:40:05 train.py[line:88] INFO toilet Acc: 1.0000
+Wed, 30 May 2018 10:40:05 train.py[line:96] INFO val Loss: 0.2753 Acc: 0.9300
+Wed, 30 May 2018 10:40:05 train.py[line:22] INFO Epoch 1/29
+Wed, 30 May 2018 10:40:05 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:43:36 train.py[line:22] INFO Epoch 0/29
+Wed, 30 May 2018 10:43:36 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO bathtub Acc: 1.0000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO bed Acc: 1.0000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO chair Acc: 1.0000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO desk Acc: 0.9500
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO dresser Acc: 0.9000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO monitor Acc: 1.0000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO night_stand Acc: 0.9000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO sofa Acc: 0.9000
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO table Acc: 0.6500
+Wed, 30 May 2018 10:47:20 train.py[line:88] INFO toilet Acc: 1.0000
+Wed, 30 May 2018 10:47:20 train.py[line:96] INFO val Loss: 0.2753 Acc: 0.9300
+Wed, 30 May 2018 10:47:20 train.py[line:22] INFO Epoch 1/29
+Wed, 30 May 2018 10:47:20 train.py[line:23] INFO ----------
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO bathtub Acc: 1.0000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO bed Acc: 1.0000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO chair Acc: 1.0000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO desk Acc: 0.9500
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO dresser Acc: 0.9000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO monitor Acc: 1.0000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO night_stand Acc: 0.9000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO sofa Acc: 0.9000
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO table Acc: 0.6500
+Wed, 30 May 2018 10:51:03 train.py[line:88] INFO toilet Acc: 1.0000
+Wed, 30 May 2018 10:51:03 train.py[line:96] INFO val Loss: 0.2753 Acc: 0.9300
+Wed, 30 May 2018 10:51:03 train.py[line:22] INFO Epoch 2/29
+Wed, 30 May 2018 10:51:03 train.py[line:23] INFO ----------
+Thu, 31 May 2018 14:57:11 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 14:57:11 train.py[line:23] INFO ----------
+Thu, 31 May 2018 15:48:05 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 15:48:05 train.py[line:23] INFO ----------
+Thu, 31 May 2018 15:48:39 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 15:48:39 train.py[line:23] INFO ----------
+Thu, 31 May 2018 15:49:08 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 15:49:08 train.py[line:23] INFO ----------
+Thu, 31 May 2018 15:50:10 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 15:50:10 train.py[line:23] INFO ----------
+Thu, 31 May 2018 15:53:14 train.py[line:22] INFO Epoch 0/29
+Thu, 31 May 2018 15:53:14 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:42:41 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:42:41 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:43:25 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:43:25 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:44:24 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:44:24 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:46:25 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:46:25 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:49:13 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:49:13 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 15:53:23 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 15:53:23 train.py[line:23] INFO ----------
+Sat, 02 Jun 2018 16:13:29 train.py[line:22] INFO Epoch 0/29
+Sat, 02 Jun 2018 16:13:29 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:48:10 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:48:10 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:50:15 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:50:15 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:51:09 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:51:09 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:52:04 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:52:04 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:52:28 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:52:28 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:53:11 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:53:11 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:54:23 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:54:23 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:55:36 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:55:36 train.py[line:23] INFO ----------
+Fri, 08 Jun 2018 16:56:03 train.py[line:22] INFO Epoch 0/29
+Fri, 08 Jun 2018 16:56:03 train.py[line:23] INFO ----------
+Sun, 10 Jun 2018 15:58:20 train.py[line:22] INFO Epoch 0/29
+Sun, 10 Jun 2018 15:58:20 train.py[line:23] INFO ----------

@@ -7,13 +7,13 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 from torchvision import models
 import torch.nn as nn
+import copy
 
 import cnn.resnet as resnet
 
-
 # import cnn.Inception as inception
 
-batch_size = 1
+batch_size = 2
 step_size = 7
 num_epochs = 30
 momentum = 0.9
@@ -69,7 +69,7 @@ for name, module in model.named_children():
 ##########################################
 
 
-'''
+
 shutil.copy('cnn/resnet.py', results_path + experiment_name + '/resnet.py')
 
 pretrained_model = models.resnet18(pretrained=True)
@@ -98,8 +98,11 @@ for name, module in model.named_children():
 
 ########################################################
 
-
+'''
+model = resnet.resnet18()
 model = model.to(device)
+#model.load_state_dict(torch.load('good_luck_to_me.pkl', map_location='cpu').state_dict())
+
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(train_params, lr=learning_rate, momentum=momentum, weight_decay=weight_decay)
+optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum, weight_decay=weight_decay)
 exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=gamma)

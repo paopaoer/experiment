@@ -1,4 +1,5 @@
 import torch.nn as nn
+import torch
 
 __all__ = ['ResNet', 'resnet18', 'resnet34', 'resnet50']
 
@@ -89,6 +90,8 @@ class ResNet(nn.Module):
                                bias=False)
         self.bn1 = nn.BatchNorm2d(64)
 
+
+
         self.relu = nn.ReLU(inplace=True)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
         self.layer1 = self._make_layer(block, 64, layers[0])
@@ -141,9 +144,12 @@ class ResNet(nn.Module):
         x = self.layer3(x)
         x = self.layer4(x)
 
+
+
         x = self.avgpool(x)
 
         x = x.view(x.size(0), -1)
+
 
         x = self.fc1(x)
         x = self.bn2(x)
@@ -153,6 +159,12 @@ class ResNet(nn.Module):
 
 
         x = x.view(int(x.size(0)/12), -1)
+
+
+
+
+
+
 
         x = self.fc2(x)
 
