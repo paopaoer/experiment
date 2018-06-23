@@ -24,6 +24,11 @@ audio_path varchar(100)
 );
 
 
+create table robot(
+robot_id int primary key not null auto_increment,
+robot_name varchar(100),
+robot_setting varchar(1000)
+);
 
 
 
