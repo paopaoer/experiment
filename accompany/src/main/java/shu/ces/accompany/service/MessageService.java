@@ -1,9 +1,11 @@
 package shu.ces.accompany.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import shu.ces.accompany.model.Robot;
 import shu.ces.accompany.model.RobotMessage;
 import shu.ces.accompany.model.User;
 import shu.ces.accompany.model.UserMessage;
@@ -53,5 +55,11 @@ public class MessageService {
     }
 
 
+    public List<RobotMessage> queryRobotHistory(User user, Robot robot) {
+
+        Object[] params = new Object[]{user.getUser_id(), robot.getRobot_id()};
+        List<RobotMessage> list = jdbcTemplate.query("select * from robot_message where user_id=? and robot_id=?", params, new BeanPropertyRowMapper<>(RobotMessage.class));
+        return list;
+    }
 
 }

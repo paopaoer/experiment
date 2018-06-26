@@ -24,7 +24,7 @@ public class MainPage {
 
     }
 
-    @PostMapping(value="/upate_user_main_page")
+    @PostMapping(value="/update_user_main_page")
     @ResponseBody
 
     public int updateUserMainPage(User user){
