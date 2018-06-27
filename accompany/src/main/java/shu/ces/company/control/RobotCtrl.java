@@ -1,12 +1,12 @@
-package shu.ces.accompany.control;
+package shu.ces.company.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import shu.ces.accompany.model.Robot;
-import shu.ces.accompany.service.RobotService;
+import shu.ces.company.model.Robot;
+import shu.ces.company.service.RobotService;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,5 +46,14 @@ public class RobotCtrl {
         robotService.updateRobot(robot);
         return "OK";
     }
+
+
+    @GetMapping(value="/query_robot")
+    @ResponseBody
+    public Robot queryRobot(HttpSession httpSession){
+        Robot r=(Robot) httpSession.getAttribute("currentRobot");
+        return r;
+    }
+
 
 }
