@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import shu.ces.company.model.Robot;
 import shu.ces.company.service.RobotService;
@@ -25,16 +26,16 @@ public class RobotCtrl {
 
     @PostMapping(value="/add_robot")
     @ResponseBody
-    public String addRobot(Robot robot, HttpSession httpSession){
+    public String addRobot( Robot robot, HttpSession httpSession){
 
-        robotService.addRobot(robot);
+        int result=robotService.addRobot(robot);
         int robot_id=robotService.queryCount();
         robot.setRobot_id(robot_id);
 
         httpSession.setAttribute("currentRobot",robot);
         System.out.println(robot_id);
 
-        return "Ok";
+        return String.valueOf(result);
     }
 
     @PostMapping(value="/update_robot")

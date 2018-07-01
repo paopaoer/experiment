@@ -8,12 +8,12 @@
     <script>
 
         function test() {
-            var message="test";
+
             $("#button").click(function () {
                 $.ajax({
                     type: "post",
                     url: "/handle_message",
-                    data:"message=test",
+                    data:"message=写首黄婉秋美的藏头诗",
                     dataType: "text",
                     success: function (data) {
 
@@ -59,7 +59,7 @@
         }
     </script>
 </head>
-<body onload="test2()">
+<body onload="test()">
 
 <button type="button" id="button">send</button>
 <button type="button" id="button2">query</button>
