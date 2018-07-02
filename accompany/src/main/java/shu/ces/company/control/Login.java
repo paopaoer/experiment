@@ -24,6 +24,7 @@ public class Login {
         return "login";
     }
 
+
     @PostMapping(value="/login_verification")
     public String login_verification(User user, HttpSession httpSession){
 
@@ -45,7 +46,7 @@ public class Login {
 
 
 
-        return "redirect:message";
+        return "redirect:robot";
     }
 
 
